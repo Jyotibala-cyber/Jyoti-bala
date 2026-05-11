@@ -7,7 +7,7 @@ A premium, cybersecurity-focused developer portfolio built with a **security-fir
 ## 🚀 Live Demo
 
 > Check out the live project here:  
-[jyotibala-cyber.github.io](https://jyotibala-cyber.github.io/)
+[https://jyotibala-cyber.netlify.app](https://jyotibala-cyber.netlify.app)
 
 ---
 
