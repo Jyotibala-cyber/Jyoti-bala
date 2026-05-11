@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jyoti Bala | Cybersecurity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ════════════════════════════════
+       HOME PAGE
+    ════════════════════════════════ */
+    #home .page-wrap { padding-top: 5rem; }
+    .hero-grid-bg {
+      position: fixed; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+    .hero-status {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(0,255,136,0.06); border: 1px solid rgba(0,255,136,0.2);
+      border-radius: 999px; padding: 0.35rem 1rem;
+      font-size: 0.72rem; color: var(--green);
+      font-family: 'Fira Code', monospace; letter-spacing: 0.08em; margin-bottom: 2rem;
+    }
+    .status-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .hero-name { font-family:'Outfit',sans-serif; font-size:clamp(3.5rem,9vw,7rem); font-weight:800; line-height:0.95; letter-spacing:-0.03em; color:var(--heading); margin-bottom:0.5rem; }
+    .hero-name .accent { color:var(--green); }
+    .hero-typed-row { font-family:'Fira Code',monospace; font-size:clamp(1rem,2.5vw,1.3rem); color:var(--muted); margin-bottom:1.75rem; display:flex; align-items:center; gap:0.5rem; }
+    .hero-typed-row .prompt { color:var(--green); }
+    #typed { color:var(--cyan); }
+    .cursor { display:inline-block; width:2px; height:1.2em; background:var(--green); animation:blink 1s infinite; vertical-align:middle; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .hero-desc { max-width:520px; font-size:1rem; line-height:1.8; color:#5a6a7a; margin-bottom:2.5rem; }
+    .hero-btns { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:3.5rem; }
+    .terminal-box { background:var(--bg2); border:1px solid var(--border); border-radius:10px; overflow:hidden; max-width:480px; }
+    .terminal-bar { background:var(--bg3); padding:0.6rem 1rem; display:flex; align-items:center; gap:0.4rem; border-bottom:1px solid var(--border2); }
+    .tbar-dot { width:10px; height:10px; border-radius:50%; }
+    .tbar-dot:nth-child(1){background:#ff5f57;} .tbar-dot:nth-child(2){background:#febc2e;} .tbar-dot:nth-child(3){background:#28c840;}
+    .terminal-title { font-size:0.7rem; color:var(--muted); margin-left:auto; font-family:'Fira Code',monospace; }
+    .terminal-body { padding:1.25rem; font-family:'Fira Code',monospace; font-size:0.8rem; }
+    .t-line { margin-bottom:0.4rem; display:flex; gap:0.5rem; }
+    .t-prompt { color:var(--green); } .t-cmd { color:var(--text); transition:opacity 0.3s; } .t-out { color:var(--muted); padding-left:1rem; } .t-green { color:var(--green); }
+    .hero-stats { display:flex; gap:2rem; margin-top:3rem; flex-wrap:wrap; }
+    .stat-num { font-family:'Outfit',sans-serif; font-size:2rem; font-weight:800; color:var(--green); line-height:1; }
+    .stat-label { font-size:0.75rem; color:var(--muted); margin-top:0.25rem; }
+
+    /* ════ ABOUT ════ */
+    .about-layout { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
+    .about-text p { color:#5a6a7a; line-height:1.85; margin-bottom:1.25rem; font-size:0.95rem; }
+    .about-text p strong { color:var(--heading); }
+    .about-text p .g { color:var(--green); }
+    .info-block { background:var(--bg2); border:1px solid var(--border2); border-radius:12px; overflow:hidden; }
+    .info-block-header { padding:0.85rem 1.25rem; background:var(--bg3); border-bottom:1px solid var(--border2); font-family:'Fira Code',monospace; font-size:0.7rem; color:var(--green); letter-spacing:0.1em; }
+    .info-row { display:flex; padding:0.8rem 1.25rem; border-bottom:1px solid var(--border2); gap:1rem; align-items:center; }
+    .info-row:last-child { border-bottom:none; }
+    .info-key { font-size:0.72rem; color:var(--muted); width:80px; flex-shrink:0; font-family:'Fira Code',monospace; }
+    .info-val { font-size:0.875rem; color:var(--text); }
+    .info-val a { color:var(--green); text-decoration:none; }
+    .edu-card { background:var(--bg2); border:1px solid var(--border2); border-left:2px solid var(--green); border-radius:10px; padding:1.25rem 1.5rem; margin-bottom:1rem; transition:all 0.2s; }
+    .edu-card:hover { border-color:var(--green); box-shadow:var(--glow2); }
+    .edu-degree { font-weight:600; color:var(--heading); font-size:0.95rem; margin-bottom:0.3rem; }
+    .edu-inst { color:var(--green); font-size:0.82rem; margin-bottom:0.2rem; }
+    .edu-year { font-family:'Fira Code',monospace; font-size:0.72rem; color:var(--muted); }
+
+    /* ════ SKILLS ════ */
+    .skills-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+    .skill-group { background:var(--bg2); border:1px solid var(--border2); border-radius:12px; padding:1.5rem; transition:all 0.2s; }
+    .skill-group:hover { border-color:var(--border); }
+    .sg-title { font-family:'Fira Code',monospace; font-size:0.7rem; color:var(--green); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:1.25rem; display:flex; align-items:center; gap:0.5rem; }
+    .sg-title::after { content:''; flex:1; height:1px; background:var(--border); }
+    .skill-item { margin-bottom:1rem; } .skill-item:last-child { margin-bottom:0; }
+    .skill-meta { display:flex; justify-content:space-between; margin-bottom:0.4rem; }
+    .skill-name { font-size:0.82rem; color:var(--text); font-weight:500; }
+    .skill-pct { font-family:'Fira Code',monospace; font-size:0.7rem; color:var(--green); }
+    .skill-bar-bg { height:3px; background:var(--bg3); border-radius:2px; overflow:hidden; }
+    .skill-bar-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,var(--green),var(--cyan)); box-shadow:0 0 8px rgba(0,255,136,0.4); transition:width 1.2s cubic-bezier(0.4,0,0.2,1); }
+    .soft-tags { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.5rem; }
+    .soft-tag { font-size:0.78rem; padding:0.35rem 0.85rem; border-radius:6px; background:rgba(0,255,136,0.05); border:1px solid rgba(0,255,136,0.12); color:var(--text); transition:all 0.2s; }
+    .soft-tag:hover { border-color:var(--green); color:var(--green); }
+
+    /* ════ EXPERIENCE ════ */
+    .exp-card { background:var(--bg2); border:1px solid var(--border2); border-left:2px solid var(--green); border-radius:12px; padding:1.5rem 1.75rem; margin-bottom:1.25rem; transition:all 0.2s; }
+    .exp-card:hover { border-color:var(--green); box-shadow:var(--glow2); }
+    .exp-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.35rem; flex-wrap:wrap; gap:0.5rem; }
+    .exp-title { font-weight:700; color:var(--heading); font-size:1rem; }
+    .exp-period { font-family:'Fira Code',monospace; font-size:0.72rem; color:var(--green); background:rgba(0,255,136,0.08); border:1px solid rgba(0,255,136,0.15); padding:0.2rem 0.6rem; border-radius:4px; }
+    .exp-company { color:var(--green); font-size:0.82rem; margin-bottom:1rem; }
+    .exp-bullets { list-style:none; }
+    .exp-bullets li { font-size:0.85rem; color:#5a6a7a; padding:0.2rem 0 0.2rem 1.2rem; position:relative; line-height:1.65; }
+    .exp-bullets li::before { content:'▸'; position:absolute; left:0; color:var(--green); }
+
+    /* ════ PROJECTS ════ */
+    .featured-project { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:2rem; margin-bottom:2rem; position:relative; overflow:hidden; transition:all 0.3s; }
+    .featured-project::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--green),var(--cyan)); }
+    .featured-project:hover { box-shadow:0 20px 50px rgba(0,0,0,0.5),var(--glow2); transform:translateY(-3px); }
+    .fp-badge { display:inline-flex; align-items:center; gap:0.4rem; background:rgba(0,255,136,0.1); border:1px solid rgba(0,255,136,0.2); border-radius:4px; padding:0.2rem 0.6rem; font-size:0.65rem; color:var(--green); font-family:'Fira Code',monospace; letter-spacing:0.08em; margin-bottom:1rem; }
+    .fp-name { font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:700; color:var(--heading); margin-bottom:0.4rem; }
+    .fp-sub { font-size:0.8rem; color:var(--green); font-family:'Fira Code',monospace; margin-bottom:1rem; }
+    .fp-desc { color:#5a6a7a; font-size:0.9rem; line-height:1.75; margin-bottom:1.25rem; }
+    .fp-bullets { list-style:none; margin-bottom:1.25rem; }
+    .fp-bullets li { font-size:0.85rem; color:#5a6a7a; padding:0.2rem 0 0.2rem 1.2rem; position:relative; }
+    .fp-bullets li::before { content:'▸'; position:absolute; left:0; color:var(--green); }
+    .fp-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+
+    /* ════ CERTIFICATES ════ */
+    .cert-section { margin-bottom:2.5rem; }
+    .cert-section-title { font-family:'Fira Code',monospace; font-size:0.68rem; color:var(--green); letter-spacing:0.18em; text-transform:uppercase; margin-bottom:1.1rem; display:flex; align-items:center; gap:0.75rem; }
+    .cert-section-title::after { content:''; flex:1; height:1px; background:var(--border2); }
+    .cert-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:0.9rem; }
+    .cert-card { background:var(--bg2); border:1px solid var(--border2); border-radius:10px; padding:1.1rem 1.25rem; display:flex; align-items:flex-start; gap:0.85rem; transition:all 0.2s; }
+    .cert-card:hover { border-color:var(--border); transform:translateY(-2px); box-shadow:var(--glow2); }
+    .cert-icon-box { width:34px; height:34px; border-radius:8px; flex-shrink:0; background:rgba(0,255,136,0.07); border:1px solid rgba(0,255,136,0.15); display:flex; align-items:center; justify-content:center; font-size:0.9rem; }
+    .cert-name { font-size:0.835rem; font-weight:600; color:var(--heading); line-height:1.35; margin-bottom:0.2rem; }
+    .cert-issuer { font-size:0.72rem; color:var(--muted); }
+    .cert-year { font-size:0.68rem; color:var(--green); font-family:'Fira Code',monospace; margin-top:0.2rem; }
+
+    /* ════ CONTACT ════ */
+    .contact-layout { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
+    .contact-intro { color:#5a6a7a; font-size:0.95rem; line-height:1.8; margin-bottom:2rem; }
+    .contact-cards { display:flex; flex-direction:column; gap:0.85rem; }
+    .contact-card { display:flex; align-items:center; gap:1rem; background:var(--bg2); border:1px solid var(--border2); border-radius:10px; padding:1rem 1.25rem; text-decoration:none; color:var(--text); transition:all 0.2s; }
+    .contact-card:hover { border-color:var(--green); color:var(--green); box-shadow:var(--glow2); transform:translateX(4px); }
+    .cc-icon { width:38px; height:38px; border-radius:9px; background:rgba(0,255,136,0.07); border:1px solid rgba(0,255,136,0.15); display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+    .cc-label { font-size:0.68rem; color:var(--muted); font-family:'Fira Code',monospace; text-transform:uppercase; letter-spacing:0.08em; }
+    .cc-val { font-size:0.875rem; font-weight:500; margin-top:0.1rem; }
+    .avail-box { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:2rem; text-align:center; box-shadow:var(--glow2); }
+    .avail-box h3 { font-family:'Outfit',sans-serif; font-size:1.4rem; font-weight:700; color:var(--heading); margin-bottom:0.75rem; }
+    .avail-box p { color:#5a6a7a; font-size:0.875rem; line-height:1.7; margin-bottom:1.75rem; }
+    .avail-green { color:var(--green); }
+
+    @media (max-width:700px) {
+      .about-layout,.skills-grid,.contact-layout { grid-template-columns:1fr; }
+      .hero-stats { gap:1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ SIDEBAR ════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">🛡️</div>
+    <div class="logo-text">CyberShield</div>
+    <div class="logo-sub">// jyoti bala</div>
+  </div>
+  <nav class="nav-menu">
+    <a class="nav-item active" data-page="home"         href="#home"         onclick="showPage('home');return false;"><span class="nav-icon">⌂</span> Home         <span class="nav-num">01</span></a>
+    <a class="nav-item"        data-page="about"        href="#about"        onclick="showPage('about');return false;"><span class="nav-icon">◈</span> About        <span class="nav-num">02</span></a>
+    <a class="nav-item"        data-page="skills"       href="#skills"       onclick="showPage('skills');return false;"><span class="nav-icon">⚡</span> Skills       <span class="nav-num">03</span></a>
+    <a class="nav-item"        data-page="experience"   href="#experience"   onclick="showPage('experience');return false;"><span class="nav-icon">◻</span> Experience   <span class="nav-num">04</span></a>
+    <a class="nav-item"        data-page="projects"     href="#projects"     onclick="showPage('projects');return false;"><span class="nav-icon">⚙</span> Projects     <span class="nav-num">05</span></a>
+    <a class="nav-item"        data-page="certificates" href="#certificates" onclick="showPage('certificates');return false;"><span class="nav-icon">◈</span> Certificates <span class="nav-num">06</span></a>
+    <a class="nav-item"        data-page="contact"      href="#contact"      onclick="showPage('contact');return false;"><span class="nav-icon">✉</span> Contact      <span class="nav-num">07</span></a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="social-row">
+      <a href="mailto:basujyoti784@gmail.com" class="soc-btn" title="Email">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </a>
+      <a href="tel:+918295914334" class="soc-btn" title="Phone">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.13 6.13l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </a>
+      <a href="https://github.com/Jyotibala-cyber" target="_blank" class="soc-btn" title="GitHub">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      </a>
+    </div>
+  </div>
+</aside>
+
+<!-- ════ MOBILE TOPBAR ════ -->
+<div class="topbar">
+  <div class="topbar-logo">🛡️ CyberShield</div>
+  <button class="hamburger">☰</button>
+</div>
+<nav class="mobile-menu">
+  <a class="nav-item" data-page="home"         href="#home"         onclick="showPage('home');return false;"><span class="nav-icon">⌂</span> Home</a>
+  <a class="nav-item" data-page="about"        href="#about"        onclick="showPage('about');return false;"><span class="nav-icon">◈</span> About</a>
+  <a class="nav-item" data-page="skills"       href="#skills"       onclick="showPage('skills');return false;"><span class="nav-icon">⚡</span> Skills</a>
+  <a class="nav-item" data-page="experience"   href="#experience"   onclick="showPage('experience');return false;"><span class="nav-icon">◻</span> Experience</a>
+  <a class="nav-item" data-page="projects"     href="#projects"     onclick="showPage('projects');return false;"><span class="nav-icon">⚙</span> Projects</a>
+  <a class="nav-item" data-page="certificates" href="#certificates" onclick="showPage('certificates');return false;"><span class="nav-icon">◈</span> Certificates</a>
+  <a class="nav-item" data-page="contact"      href="#contact"      onclick="showPage('contact');return false;"><span class="nav-icon">✉</span> Contact</a>
+</nav>
+
+<main class="main">
+
+  <!-- ══ HOME ══ -->
+  <div id="home" class="page">
+    <div class="hero-grid-bg"></div>
+    <div class="page-wrap" style="padding-top:5rem;padding-bottom:5rem;">
+      <div class="hero-status"><div class="status-dot"></div>Available for Opportunities</div>
+      <h1 class="hero-name">Jyoti<br><span class="accent">Bala</span></h1>
+      <div class="hero-typed-row"><span class="prompt">$</span><span id="typed">Cybersecurity Enthusiast</span><span class="cursor"></span></div>
+      <p class="hero-desc">BSc Computer Science graduate passionate about protecting digital systems. Specializing in threat analysis, malware detection, and vulnerability assessment — building a safer internet, one line of code at a time.</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-green" onclick="showPage('projects');return false;">View Projects →</a>
+        <a href="#contact"  class="btn btn-ghost" onclick="showPage('contact');return false;">Get in Touch</a>
+      </div>
+      <div class="terminal-box">
+        <div class="terminal-bar">
+          <div class="tbar-dot"></div><div class="tbar-dot"></div><div class="tbar-dot"></div>
+          <div class="terminal-title">jyoti@cybershield ~ </div>
+        </div>
+        <div class="terminal-body">
+          <div class="t-line"><span class="t-prompt">→</span><span class="t-cmd" id="terminal-cmd">whoami --cyber</span></div>
+          <div class="t-line"><span class="t-out">role:   <span class="t-green">Cybersecurity Analyst (seeking)</span></span></div>
+          <div class="t-line"><span class="t-out">edu:    <span class="t-green">BSc CS + Diploma in Cyber Security</span></span></div>
+          <div class="t-line"><span class="t-out">loc:    <span class="t-green">Sirsa, Haryana, India</span></span></div>
+          <div class="t-line"><span class="t-out">status: <span class="t-green">open_to_work: TRUE</span></span></div>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">1+</div><div class="stat-label">Major Project</div></div>
+        <div class="stat-item"><div class="stat-num">1</div><div class="stat-label">Certification</div></div>
+        <div class="stat-item"><div class="stat-num">2+</div><div class="stat-label">Yrs Experience</div></div>
+        <div class="stat-item"><div class="stat-num">5+</div><div class="stat-label">Core Skills</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ABOUT ══ -->
+  <div id="about" class="page">
+    <div class="page-wrap">
+      <div class="page-eyebrow">About</div>
+      <h2 class="page-title">Who <span>I Am</span></h2>
+      <div class="divider"></div>
+      <div class="about-layout">
+        <div class="about-text">
+          <p>I'm <strong>Jyoti Bala</strong>, a <span class="g">cybersecurity enthusiast</span> and BSc Computer Science graduate with a strong foundation in programming, system security, and digital forensics.</p>
+          <p>Currently pursuing a <strong>Diploma in Cyber Security & Ethical Hacking</strong> at Ch. Devi Lal University, Sirsa — deepening my expertise beyond the BSc I completed from the same university.</p>
+          <p>My hands-on experience includes building <strong>ThreatHunter AI</strong> — a Hybrid Malware Detection System using Python and Machine Learning, combining AI heuristics with signature-based scanning for zero-day threat detection.</p>
+          <p>I've also gained practical industry experience at <strong>Dashmesh Communication</strong> as a Customer Service & Activation Executive (2023–2025), handling Airtel services and on-site technical support.</p>
+          <p>Now actively seeking an entry-level <span class="g">Cybersecurity Analyst</span> role to protect systems and contribute to organizational digital security.</p>
+          <div style="margin-top:2rem;">
+            <div class="page-eyebrow" style="margin-bottom:1.25rem;">Education</div>
+            <div class="edu-card">
+              <div class="edu-degree">Diploma in Cyber Security & Ethical Hacking</div>
+              <div class="edu-inst">Ch. Devi Lal University, Sirsa</div>
+              <div class="edu-year">2025 – Pursuing</div>
+            </div>
+            <div class="edu-card">
+              <div class="edu-degree">Bachelor of Science (BSc) in Computer Science</div>
+              <div class="edu-inst">Ch. Devi Lal University, Sirsa</div>
+              <div class="edu-year">2020 – 2023</div>
+            </div>
+            <div class="edu-card">
+              <div class="edu-degree">Higher Secondary (12th) — Non-Medical Stream</div>
+              <div class="edu-inst">Govt. Senior Secondary School, Goriwala, Sirsa | HBSE</div>
+              <div class="edu-year">2020</div>
+            </div>
+            <div class="edu-card">
+              <div class="edu-degree">Secondary (10th)</div>
+              <div class="edu-inst">Govt. High School, Ratta Khera, Sirsa | HBSE</div>
+              <div class="edu-year">2018</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="info-block">
+            <div class="info-block-header">// personal info</div>
+            <div class="info-row"><div class="info-key">name</div><div class="info-val">Jyoti Bala</div></div>
+            <div class="info-row"><div class="info-key">role</div><div class="info-val">Cybersecurity Enthusiast</div></div>
+            <div class="info-row"><div class="info-key">location</div><div class="info-val">Sirsa, Haryana</div></div>
+            <div class="info-row"><div class="info-key">email</div><div class="info-val"><a href="mailto:basujyoti784@gmail.com">basujyoti784@gmail.com</a></div></div>
+            <div class="info-row"><div class="info-key">phone</div><div class="info-val">+91-82959-14334</div></div>
+            <div class="info-row"><div class="info-key">github</div><div class="info-val"><a href="https://github.com/Jyotibala-cyber" target="_blank">Jyotibala-cyber</a></div></div>
+            <div class="info-row"><div class="info-key">status</div><div class="info-val" style="color:var(--green);">● Open to Work</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SKILLS ══ -->
+  <div id="skills" class="page">
+    <div class="page-wrap">
+      <div class="page-eyebrow">Skills</div>
+      <h2 class="page-title">Core <span>Expertise</span></h2>
+      <div class="divider"></div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="sg-title">Cybersecurity</div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">Ethical Hacking</span><span class="skill-pct">82%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="82%"></div></div></div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">Malware Analysis</span><span class="skill-pct">80%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="80%"></div></div></div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">Threat Analysis</span><span class="skill-pct">78%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="78%"></div></div></div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">Vulnerability Assessment</span><span class="skill-pct">75%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="75%"></div></div></div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">Digital Forensics</span><span class="skill-pct">72%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="72%"></div></div></div>
+        </div>
+        <div class="skill-group">
+          <div class="sg-title">Tools & Platforms</div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">Kali Linux</span><span class="skill-pct">80%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="80%"></div></div></div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">ClamAV</span><span class="skill-pct">75%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="75%"></div></div></div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">SHA256 / Hash Analysis</span><span class="skill-pct">78%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="78%"></div></div></div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">Machine Learning (RF)</span><span class="skill-pct">70%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="70%"></div></div></div>
+        </div>
+        <div class="skill-group">
+          <div class="sg-title">Programming</div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">Python</span><span class="skill-pct">78%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="78%"></div></div></div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">C / C++</span><span class="skill-pct">72%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="72%"></div></div></div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">HTML / CSS</span><span class="skill-pct">75%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="75%"></div></div></div>
+          <div class="skill-item"><div class="skill-meta"><span class="skill-name">JavaScript</span><span class="skill-pct">65%</span></div><div class="skill-bar-bg"><div class="skill-bar-fill" data-w="65%"></div></div></div>
+        </div>
+        <div class="skill-group">
+          <div class="sg-title">Soft Skills</div>
+          <div class="soft-tags">
+            <span class="soft-tag">Analytical Thinking</span><span class="soft-tag">Problem Solving</span>
+            <span class="soft-tag">Leadership</span><span class="soft-tag">Communication</span>
+            <span class="soft-tag">Time Management</span><span class="soft-tag">Multi-tasking</span>
+            <span class="soft-tag">Project Collaboration</span><span class="soft-tag">Quick Learner</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ EXPERIENCE ══ -->
+  <div id="experience" class="page">
+    <div class="page-wrap">
+      <div class="page-eyebrow">Experience</div>
+      <h2 class="page-title">Work <span>History</span></h2>
+      <div class="divider"></div>
+      <div class="exp-card">
+        <div class="exp-header">
+          <div class="exp-title">Customer Service & Activation Executive</div>
+          <div class="exp-period">2023 – 2025</div>
+        </div>
+        <div class="exp-company">Dashmesh Communication</div>
+        <ul class="exp-bullets">
+          <li>Handled activation and setup of Airtel services including mobile connections, Dish TV, and AirFiber WiFi for customers</li>
+          <li>Assisted customers with troubleshooting, service queries, and on-site technical support</li>
+          <li>Gained practical experience in telecom service operations and client relationship management</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PROJECTS ══ -->
+  <div id="projects" class="page">
+    <div class="page-wrap">
+      <div class="page-eyebrow">Projects</div>
+      <h2 class="page-title">Featured <span>Work</span></h2>
+      <div class="divider"></div>
+      <div class="featured-project">
+        <div class="fp-badge">★ Featured Project</div>
+        <div class="fp-name">ThreatHunter AI</div>
+        <div class="fp-sub">Hybrid Malware Detection System · Feb 2026 – Present</div>
+        <p class="fp-desc">A sophisticated malware detection system combining signature-based scanning with AI-powered heuristic analysis to identify both known and zero-day threats with high accuracy.</p>
+        <ul class="fp-bullets">
+          <li>Developed hybrid malware detection system using Python and Machine Learning</li>
+          <li>Combined signature-based scanning (SHA256 hash matching) with AI-based heuristic analysis using Random Forest model</li>
+          <li>Integrated file entropy analysis, keyword detection, and Linux ClamAV support for deeper scanning</li>
+          <li>Enhanced zero-day threat detection and overall system security capabilities</li>
+        </ul>
+        <div class="fp-footer">
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">Machine Learning</span>
+            <span class="tag">ClamAV</span><span class="tag">Kali Linux</span>
+            <span class="tag">Random Forest</span><span class="tag">SHA256</span>
+          </div>
+          <a href="https://github.com/harsh160311/ThreatHunter-AI" target="_blank" class="btn btn-ghost">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CERTIFICATES ══ -->
+  <div id="certificates" class="page">
+    <div class="page-wrap">
+      <div class="page-eyebrow">Certificates</div>
+      <h2 class="page-title">Courses & <span>Credentials</span></h2>
+      <div class="divider"></div>
+      <div class="cert-section">
+        <div class="cert-section-title">Certifications</div>
+        <div class="cert-grid">
+          <div class="cert-card">
+            <div class="cert-icon-box">🛡️</div>
+            <div>
+              <div class="cert-name">Cyber Security Associate Certificate Program</div>
+              <div class="cert-issuer">Skill India</div>
+              <div class="cert-year">April 24, 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cert-section">
+        <div class="cert-section-title">Institutional Affiliations</div>
+        <div class="cert-grid">
+          <div class="cert-card">
+            <div class="cert-icon-box">🎓</div>
+            <div>
+              <div class="cert-name">Ch. Devi Lal University, Sirsa</div>
+              <div class="cert-issuer">BSc CS + Diploma in Cyber Security & Ethical Hacking</div>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon-box">🏫</div>
+            <div>
+              <div class="cert-name">Govt. Senior Secondary School, Goriwala</div>
+              <div class="cert-issuer">Higher Secondary (12th) | HBSE</div>
+            </div>
+          </div>
+          <div class="cert-card">
+            <div class="cert-icon-box">🏫</div>
+            <div>
+              <div class="cert-name">Govt. High School, Ratta Khera</div>
+              <div class="cert-issuer">Secondary (10th) | HBSE</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CONTACT ══ -->
+  <div id="contact" class="page">
+    <div class="page-wrap">
+      <div class="page-eyebrow">Contact</div>
+      <h2 class="page-title">Let's <span>Connect</span></h2>
+      <div class="divider"></div>
+      <div class="contact-layout">
+        <div>
+          <p class="contact-intro">I'm actively looking for cybersecurity opportunities. Whether you have a role, a project, or just want to say hi — feel free to reach out!</p>
+          <div class="contact-cards">
+            <a href="mailto:basujyoti784@gmail.com" class="contact-card">
+              <div class="cc-icon">📧</div>
+              <div><div class="cc-label">Email</div><div class="cc-val">basujyoti784@gmail.com</div></div>
+            </a>
+            <a href="tel:+918295914334" class="contact-card">
+              <div class="cc-icon">📱</div>
+              <div><div class="cc-label">Phone</div><div class="cc-val">+91-82959-14334</div></div>
+            </a>
+            <a href="https://github.com/Jyotibala-cyber" target="_blank" class="contact-card">
+              <div class="cc-icon">🐙</div>
+              <div><div class="cc-label">GitHub</div><div class="cc-val">Jyotibala-cyber</div></div>
+            </a>
+            <div class="contact-card" style="cursor:default;">
+              <div class="cc-icon">📍</div>
+              <div><div class="cc-label">Location</div><div class="cc-val">Sirsa, Haryana, India</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="avail-box">
+          <div style="font-size:3rem;margin-bottom:1rem;">🛡️</div>
+          <h3>Open to Work</h3>
+          <p>Looking for entry-level <span class="avail-green">Cybersecurity Analyst</span> roles. Let's build a more secure digital world together.</p>
+          <a href="mailto:basujyoti784@gmail.com" class="btn btn-green" style="width:100%;justify-content:center;">Send Me an Email →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
