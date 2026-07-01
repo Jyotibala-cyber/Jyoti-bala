@@ -2,18 +2,13 @@
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-
   const page = document.getElementById(id);
   if (page) { page.classList.add('active'); }
-
   document.querySelectorAll(`[data-page="${id}"]`).forEach(n => n.classList.add('active'));
-
   // update hash
   history.replaceState(null, '', '#' + id);
-
   // close mobile menu
   document.querySelector('.mobile-menu')?.classList.remove('open');
-
   // scroll to top
   window.scrollTo(0, 0);
 }
@@ -22,23 +17,26 @@ function showPage(id) {
 document.addEventListener('DOMContentLoaded', () => {
   const hash = location.hash.replace('#', '') || 'home';
   showPage(hash);
-
   // hamburger toggle
   document.querySelector('.hamburger')?.addEventListener('click', () => {
     document.querySelector('.mobile-menu')?.classList.toggle('open');
   });
-
   // typing animation on hero
   typeLoop();
-
   // animate skill bars
   observeSkills();
 });
 
 // ── Typing effect ──
-const roles = ['Cybersecurity Enthusiast', 'Ethical Hacker', 'Malware Analyst', 'Digital Forensics Expert', 'Python Developer'];
+const roles = [
+  'Cybersecurity Enthusiast',
+  'Ethical Hacker',
+  'Malware Analyst',
+  'Digital Forensics Expert',
+  'Frontend Developer',
+  'Python Developer'
+];
 let ri = 0, ci = 0, deleting = false;
-
 function typeLoop() {
   const el = document.getElementById('typed');
   if (!el) return;
@@ -68,7 +66,14 @@ function observeSkills() {
 }
 
 // ── Terminal cycling commands ──
-const cmds = ['whoami --cyber', 'nmap -sV target.local', 'python3 threathunter.py --scan', 'cat /etc/skills | grep malware'];
+const cmds = [
+  'whoami --cyber',
+  'nmap -sV target.local',
+  'python3 cyberrecon.py --scan github.com',
+  'cat /var/log/crimesense/alerts.log',
+  'openssl s_client -connect target:443',
+  'python3 -m flask run --port 5000'
+];
 let cmdI = 0;
 function nextCmd() {
   const el = document.getElementById('terminal-cmd');
